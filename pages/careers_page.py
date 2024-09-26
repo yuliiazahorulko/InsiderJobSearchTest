@@ -1,33 +1,25 @@
-from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from pages.base_page import BasePage
+from config.config import CareersPageConfig
 import time
 import logging
 
 
 class CareersPage(BasePage):
-    def __init__(self, driver):
-        super().__init__(driver)
-        self.LOCATIONS = (By.ID, "career-our-location")
-        self.TEAMS = (By.ID, "career-find-our-calling")
-        self.LIFE_AT_INSIDER = (By.CSS_SELECTOR, "div.elementor-element.elementor-element-21cea83.elementor-widget.elementor-widget-heading > div > h2")
-        self.SEE_ALL_TEAMS = (By.LINK_TEXT, "See all teams")
-        self.QA_JOBS_LINK = (By.LINK_TEXT, "Quality Assurance")
-
     def verify_blocks(self):
         try:
             logging.info("Verifying Locations, Teams and Life at Insider blocks")
             WebDriverWait(self.driver, 10).until(
-                EC.visibility_of_element_located(self.LOCATIONS), 
+                EC.visibility_of_element_located(CareersPageConfig.LOCATIONS), 
                 message="Locations block is not visible"
             )
             WebDriverWait(self.driver, 10).until(
-                EC.visibility_of_element_located(self.TEAMS), 
+                EC.visibility_of_element_located(CareersPageConfig.TEAMS), 
                 message="TEAMS block is not visible"
             )
             WebDriverWait(self.driver, 10).until(
-                EC.visibility_of_element_located(self.LIFE_AT_INSIDER), 
+                EC.visibility_of_element_located(CareersPageConfig.LIFE_AT_INSIDER), 
                 message="Life at Insider block is not visible"
             )
         except Exception as e:
@@ -38,7 +30,7 @@ class CareersPage(BasePage):
         try:
             logging.info("Navigating to the QA Jobs page")
             see_all_teams = WebDriverWait(self.driver, 30).until(
-                EC.element_to_be_clickable(self.SEE_ALL_TEAMS),
+                EC.element_to_be_clickable(CareersPageConfig.SEE_ALL_TEAMS),
                 message="See All Teams link is not clickable"
             )
             self.driver.execute_script("scroll(0, 2800)", see_all_teams)
@@ -46,7 +38,7 @@ class CareersPage(BasePage):
             see_all_teams.click()
             
             qa_jobs_link = WebDriverWait(self.driver, 30).until(
-                EC.element_to_be_clickable(self.QA_JOBS_LINK),
+                EC.element_to_be_clickable(CareersPageConfig.QA_JOBS_LINK),
                 message="QA Jobs link is not clickable"
             ) 
             self.driver.execute_script("scroll(0, 4500)", qa_jobs_link)

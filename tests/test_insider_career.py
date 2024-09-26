@@ -3,16 +3,15 @@ from pages.careers_page import CareersPage
 from pages.jobs_page import JobsPage
 import logging
 from utils.screenshots import take_screenshot
+from config.config import URLs
 
 
 class TestInsiderCareers:
-    BASE_URL = "https://useinsider.com/"
-
     def test_career_flow(self, setup):
         logging.info("Test initializer: testing Insider Careers")
         driver = setup
         try:
-            driver.get(self.BASE_URL)
+            driver.get(URLs.BASE_URL)
             logging.info(f"Visit useinsider.com and check homepage")
             home_page = HomePage(driver)
 
